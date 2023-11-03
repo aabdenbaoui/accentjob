@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home page</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Personal Information </h1>
+<div class="container d-flex justify-content-center ">
+
+        <form action="/save-personal-info" th:object="${userAccount}" method="POST">
+            <div class="mb-3">
+                <input type="hidden" th:field="*{userId}"/>
+            </div>
+            <div class="mb-3">
+                    <label for="inputContactNumber">Contact Number</label>
+                    <input type="text" class="form-control" id="inputContactNumber" th:field="*{contactNumber}">
+            </div>
+            <div class="mb-3">
+                <label>Gender</label>
+                <div th:each="gender : ${genders}">
+                    <input name="gender" type="radio" th:text="${gender}" th:value="${gender}" />
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputUserType">User type: </label>
+                <select class="form-control" id="inputUserType"  th:field="*{userType}">
+                    <option value="0">select User Type:</option>
+                    <option th:each="option : ${userTypeNameList}" th:value="${option}" th:text="${option}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="date" class="form-control" id="dateOfBirth" placeholder="dateOfBirth" th:field="${userAccount.dateOfBirth}">
+                <label for="inputSmsNotificationActive">SMS notification</label>
+                <input type="checkbox" id="inputSmsNotificationActive" th:field="*{smsNotificationActive}" th:checked="*{smsNotificationActive} == true">
+                <label for="inputEmailNotificationActive">Email notification</label>
+                <input type="checkbox" name = "emailNotificationActive" id="inputEmailNotificationActive" th:field="*{emailNotificationActive}" th:checked="*{emailNotificationActive} == true" >
+            </div>
+
+                <input type="hidden" th:field="${userAccount.firstName}">
+                <input  type="hidden"  th:field="${userAccount.lastName}">
+                <input type="hidden"  th:field="${userAccount.email}">
+                <input type="hidden" th:field="${userAccount.password}">
+                <input type="hidden" th:field="${userAccount.registrationDate}">
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
